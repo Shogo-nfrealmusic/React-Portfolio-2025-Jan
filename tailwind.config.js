@@ -1,9 +1,12 @@
 /* eslint-disable no-undef */
 
 /** @type {import('tailwindcss').Config} */
+const flattenColorPalette = require("tailwindcss/lib/util/flattenColorPalette");
+
 module.exports = {
   content: ["./src/**/*.{html,js,jsx}"],
   mode: "jit",
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -20,10 +23,16 @@ module.exports = {
       screens: {
         xs: "450px",
       },
-      backgroundImage: {
-        "hero-pattern": "url('/src/assets/herobg.png')",
-      },
     },
   },
-  plugins: [],
+  plugins: [
+    function addVariablesForColors({ addBase, theme }) {
+      let allColors = flattenColorPalette(theme("extend.colors") || {}); // 変更点
+      let newVars = Object.fromEntries(
+        Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+      );
+
+      addBase({ ":root": newVars });
+    },
+  ],
 };
