@@ -45,13 +45,6 @@ const Navbar = () => {
             className="w-[28px] h-[28px] object-contain cursor-pointer"
             onClick={() => setToggle(!toggle)}
           />
-          {/* 
-            ポイント:
-            - flex は常に付ける (domに常に存在させる)
-            - toggle に応じて opacity / scale を切り替え
-            - pointer-events-none で非表示状態ではクリックできないようにする
-            - transition や transform でスムーズな変化 
-          */}
           <div
             className={`
               p-6 black-gradient
